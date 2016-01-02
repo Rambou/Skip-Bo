@@ -1,10 +1,113 @@
 package gr.aegean.rambou.Main;
 
 import card.SkipBoSuper;
+import Piles.NullPileException;
 
-public class Main {
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class Main extends JFrame {
+
+    // Γραφικά στοιχεία
+    private JButton btn_start;
+    private JTextField txt_player1;
+    private JTextField txt_player2;
+    private JLabel lb_player1;
+    private JLabel lb_player2;
+
+    private Main() {
+        // Τίτλος παραθύρου
+        super("Επιλογή παικτών");
+
+        // Αρχικοποίηση γραφικών στοιχείων
+        txt_player1 = new javax.swing.JTextField();
+        lb_player1 = new javax.swing.JLabel();
+        txt_player2 = new javax.swing.JTextField();
+        lb_player2 = new javax.swing.JLabel();
+        btn_start = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null); // Τοποθεσία εκκίνησης παραθύρου στην οθόνη
+
+        // ιδιότητες παραθύρου
+        setVisible(true);
+        setResizable(false);
+
+        lb_player1.setText("Παίκτης 1");
+        lb_player2.setText("Παίκτης 2");
+        txt_player1.setText("Μαρία");
+        txt_player2.setText("Γιώργος");
+        btn_start.setText("Νέο Παιχνίδι");
+
+        // Listeners γραφικών στοιχείων
+        btn_start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Έλεγχος για διαφορετικά ονόματα παικτών
+                if (txt_player1.getText().trim().equals(txt_player2.getText())) {
+                    JOptionPane.showMessageDialog(btn_start,
+                            "Οι δυο παίκτες πρέπει να έχουν διαφορετικό όνομα.",
+                            "Προσοχή",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    try {
+                        Table table = new Table(txt_player1.getText(), txt_player2.getText());
+                    } catch (NullPileException e1) {
+                    }
+                    dispose();
+                }
+            }
+        });
+
+        // Στοίχιση στοιχείων
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lb_player1)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txt_player1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lb_player2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txt_player2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_start)
+                                .addGap(75, 75, 75))
+        );
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txt_player1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lb_player1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txt_player2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lb_player2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btn_start)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }
 
     public static void main(String[] args) {
+        // Δημιουργία Παραθύρου
+        new Main();
+
+        // Check for testing
+        if (args.length == 0 || !args[0].equals("test")) return;
+
         // Δημιουργία παικτών
         Player player1 = new Player("Rambou");
         Player player2 = new Player("Armageddonas");
@@ -90,4 +193,5 @@ public class Main {
         }
 
     }
+
 }
