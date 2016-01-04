@@ -1,11 +1,13 @@
 package gr.aegean.rambou.Main;
 
-import card.SkipBoSuper;
 import Piles.NullPileException;
+import card.SkipBoSuper;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Main extends JFrame {
 
@@ -19,6 +21,13 @@ public class Main extends JFrame {
     private Main() {
         // Τίτλος παραθύρου
         super("Επιλογή παικτών");
+
+        // Εικονίδιο παραθύρου
+        try {
+            setIconImage(ImageIO.read(getClass().getClassLoader().getResource("card/logo.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Αρχικοποίηση γραφικών στοιχείων
         txt_player1 = new javax.swing.JTextField();

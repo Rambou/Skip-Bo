@@ -3,9 +3,11 @@ package gr.aegean.rambou.Main;
 import Piles.NullPileException;
 import card.UI;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Table extends JFrame {
 
@@ -48,6 +50,13 @@ public class Table extends JFrame {
     public Table(String Player1, String Player2) throws NullPileException {
         // Τίτλος παραθύρου
         super("Παιχνίδι - Ταμπλό");
+
+        // Εικονίδιο παραθύρου
+        try {
+            setIconImage(ImageIO.read(getClass().getClassLoader().getResource("card/logo.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         initComponents();
 
@@ -575,6 +584,8 @@ public class Table extends JFrame {
                 selected.setClickable(false);
                 selected = null;
             }
+
+            if (gameEnd()) return;
         }
 
     }
@@ -637,6 +648,7 @@ public class Table extends JFrame {
                 }
                 RearrangeHandCards();
             }
+
             if (gameEnd()) return;
         }
 
@@ -664,6 +676,7 @@ public class Table extends JFrame {
                 selected.setClickable(false);
                 selected = null;
             }
+            if (gameEnd()) return;
         }
 
     }
