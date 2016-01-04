@@ -6,9 +6,10 @@ import Piles.Draw;
 public class GameEngine {
     private final Player player1;
     private final Player player2;
+    private final Building[] buidling;
     private Draw drawpile;
     private int turn;
-    private final Building[] buidling;
+    private Player winner;
 
     public GameEngine(Player p1, Player p2) {
         this.player1 = p1;
@@ -105,7 +106,6 @@ public class GameEngine {
             printPlayers();
             printBuidPiles();
 
-            Player winner;
             int points;
             if ((player1.getStock().size() < player2.getStock().size())) {
                 points = player2.getStock().countPoints() - player1.getStock().countPoints();
@@ -126,7 +126,6 @@ public class GameEngine {
 
     public boolean stockToBuild(Player player, int bpile) {
         return player.stockToBuild(this.buidling[bpile]);
-
     }
 
     public boolean handToBuild(Player player, int hand, int bpile) {
@@ -134,8 +133,7 @@ public class GameEngine {
     }
 
     public boolean handToDiscard(Player player, int hand, int dpile) {
-        player.handToDiscard(hand, dpile);
-        return true;
+        return player.handToDiscard(hand, dpile);
     }
 
     public boolean discardToBuild(Player player, int discard, int bpile) {
@@ -145,4 +143,14 @@ public class GameEngine {
     public Draw getDraw() {
         return drawpile;
     }
+
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public Building getBuidling(int i) {
+        return buidling[i];
+    }
+
 }

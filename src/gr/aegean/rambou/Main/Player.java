@@ -30,9 +30,14 @@ public class Player {
     }
 
     // Τοποθέτηση συγκεκριμένης κάρτας από το χέρι σε συγκεκριμένο Pile στο discard
-    public void handToDiscard(int card, int pile) {
-        this.discard[pile].add(hand.get(card));
-        hand.remove(card);
+    public boolean handToDiscard(int card, int pile) {
+        try {
+            this.discard[pile].add(hand.get(card));
+            hand.remove(card);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     // Τοποθέτηση συγκεκριμένης κάρτας από συγκεκριμένο Pile του discard στο Building
@@ -67,6 +72,7 @@ public class Player {
             }
         } catch (Exception e) {
             System.out.println("Χεράκι: " + e);
+            e.printStackTrace();
         }
         return false;
     }
@@ -84,17 +90,6 @@ public class Player {
             System.out.println("StockToBuild: " + e);
         }
         return false;
-    }
-
-    public void setStock(Draw dpile) {
-        // Κατασκευάζει το stock του παίκτη από το drawpile
-        try {
-            while (!stock.isFull()) {
-                stock.add(dpile.get());
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 
     public void fillHand(Draw dpile) {
@@ -120,6 +115,17 @@ public class Player {
 
     public Stock getStock() {
         return stock;
+    }
+
+    public void setStock(Draw dpile) {
+        // Κατασκευάζει το stock του παίκτη από το drawpile
+        try {
+            while (!stock.isFull()) {
+                stock.add(dpile.get());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public HandCollection getHand() {
