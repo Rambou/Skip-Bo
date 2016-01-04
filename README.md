@@ -7,9 +7,10 @@ Belove there is a representation of all class and it's relationship in the game.
 Here's a screenshot from the console showing that everything works fine!
 ![alt text](https://github.com/Rambou/Skip-Bo/blob/master/Images/Functional%20testing.png "Testing")
 
-Here are screenshots from the GUI of the app.
+Here are screenshots from the GUI of the app.   
 ![alt text](https://github.com/Rambou/Skip-Bo/blob/master/Images/main.PNG "Main")
 ![alt text](https://github.com/Rambou/Skip-Bo/blob/master/Images/game.PNG "Game")
 ![alt text](https://github.com/Rambou/Skip-Bo/blob/master/Images/won%20-%20before.PNG "Won Before")
 ![alt text](https://github.com/Rambou/Skip-Bo/blob/master/Images/won%20-%20after.PNG "Won After")
 ![alt text](https://github.com/Rambou/Skip-Bo/blob/master/Images/super%20-%20SkipBo.PNG "Super SkipBo")
+
