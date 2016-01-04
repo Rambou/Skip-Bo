@@ -5,6 +5,7 @@ import card.Numeric;
 import card.SkipBo;
 import card.SkipBoSuper;
 
+import javax.swing.*;
 import java.util.LinkedList;
 
 public class Building implements PileInterface {
@@ -19,18 +20,18 @@ public class Building implements PileInterface {
         if (card == null)
             return false;
 
-        // Αν η στοίβα είναι γεμάτη καθάρισε τη
+        // Ξ‘Ξ½ Ξ· ΟƒΟ„ΞΏΞ―Ξ²Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ξ³ΞµΞΌΞ¬Ο„Ξ· ΞΊΞ±ΞΈΞ¬ΟΞΉΟƒΞµ Ο„Ξ·
         if (isFull()) {
             this.cards.removeAll(cards);
         }
 
-        // Αν η στοίβα είναι άδεια τότε θέσε ότι ο αριθμός της υπάρχουσας κάρτας στην στοίβα είναι 0, αλλιώς πάρε τον αριθμό της κάρτας
+        // Ξ‘Ξ½ Ξ· ΟƒΟ„ΞΏΞ―Ξ²Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ξ¬Ξ΄ΞµΞΉΞ± Ο„ΟΟ„Ξµ ΞΈΞ­ΟƒΞµ ΟΟ„ΞΉ ΞΏ Ξ±ΟΞΉΞΈΞΌΟΟ‚ Ο„Ξ·Ο‚ Ο…Ο€Ξ¬ΟΟ‡ΞΏΟ…ΟƒΞ±Ο‚ ΞΊΞ¬ΟΟ„Ξ±Ο‚ ΟƒΟ„Ξ·Ξ½ ΟƒΟ„ΞΏΞ―Ξ²Ξ± ΞµΞ―Ξ½Ξ±ΞΉ 0, Ξ±Ξ»Ξ»ΞΉΟΟ‚ Ο€Ξ¬ΟΞµ Ο„ΞΏΞ½ Ξ±ΟΞΉΞΈΞΌΟ Ο„Ξ·Ο‚ ΞΊΞ¬ΟΟ„Ξ±Ο‚
         int current = 0;
         if (!isEmpty()) {
             current = ((Numeric) cards.getLast()).getNumber();
         }
 
-        // Έλεγχος για τον τύπο της κάρτας και κατάλληλος έλεγχος για εισαγωγή της στην στοίβα
+        // ΞΞ»ΞµΞ³Ο‡ΞΏΟ‚ Ξ³ΞΉΞ± Ο„ΞΏΞ½ Ο„ΟΟ€ΞΏ Ο„Ξ·Ο‚ ΞΊΞ¬ΟΟ„Ξ±Ο‚ ΞΊΞ±ΞΉ ΞΊΞ±Ο„Ξ¬Ξ»Ξ»Ξ·Ξ»ΞΏΟ‚ Ξ­Ξ»ΞµΞ³Ο‡ΞΏΟ‚ Ξ³ΞΉΞ± ΞµΞΉΟƒΞ±Ξ³Ο‰Ξ³Ξ® Ο„Ξ·Ο‚ ΟƒΟ„Ξ·Ξ½ ΟƒΟ„ΞΏΞ―Ξ²Ξ±
         if (card.isType(Card.Type.NUMERIC)) {
             if (((Numeric) card).getNumber() == current + 1) {
                 cards.add(card);
@@ -38,17 +39,30 @@ public class Building implements PileInterface {
                 // System.out.println("Cannot add a card less or equal than " + ((Numeric) cards.getLast()).getNumber());
                 return false;
             }
-        } else { // Αν η κάρτα είναι Μπαλαντέρ έλεγξε τον τύπο του και αναλόγως πράξε
+        } else { // Ξ‘Ξ½ Ξ· ΞΊΞ¬ΟΟ„Ξ± ΞµΞ―Ξ½Ξ±ΞΉ ΞΟ€Ξ±Ξ»Ξ±Ξ½Ο„Ξ­Ο Ξ­Ξ»ΞµΞ³ΞΎΞµ Ο„ΞΏΞ½ Ο„ΟΟ€ΞΏ Ο„ΞΏΟ… ΞΊΞ±ΞΉ Ξ±Ξ½Ξ±Ξ»ΟΞ³Ο‰Ο‚ Ο€ΟΞ¬ΞΎΞµ
             if (((SkipBo) card).isType(SkipBo.Type.SUPER)) {
-                // Αν είναι άδεια ξεκινάει με το νούμερο που δηλώνει αυτός διαφορετικά λειτουργεί ως μπαλαντέρ
-                if (isEmpty())
+                // Ξ‘Ξ½ ΞµΞ―Ξ½Ξ±ΞΉ Ξ¬Ξ΄ΞµΞΉΞ± ΞΎΞµΞΊΞΉΞ½Ξ¬ΞµΞΉ ΞΌΞµ Ο„ΞΏ Ξ½ΞΏΟΞΌΞµΟΞΏ Ο€ΞΏΟ… Ξ΄Ξ·Ξ»ΟΞ½ΞµΞΉ Ξ±Ο…Ο„ΟΟ‚ Ξ΄ΞΉΞ±Ο†ΞΏΟΞµΟ„ΞΉΞΊΞ¬ Ξ»ΞµΞΉΟ„ΞΏΟ…ΟΞ³ΞµΞ― Ο‰Ο‚ ΞΌΟ€Ξ±Ξ»Ξ±Ξ½Ο„Ξ­Ο
+                if (isEmpty()) {
+                    String[] numbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+                    String Number = (String) JOptionPane.showInputDialog(null,
+                            "Ξ¤ΞΉ ΞΈΞ­Ξ»ΞµΞΉΟ‚ Ξ½Ξ± ΞΊΞ¬Ξ½ΞµΞΉΟ‚ Ο„Ξ·Ξ½ Super SkipBo;",
+                            "Ξ•Ο€Ξ―Ξ»ΞµΞΎΞµ Ξ±ΟΞΉΞΈΞΌΟ",
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            numbers,
+                            numbers[0]);
+                    ((SkipBoSuper) card).setNumber(Integer.valueOf(Number));
                     cards.add(new Numeric(((SkipBoSuper) card).getNumber()));
-                else
+                } else
                     cards.add(new Numeric(current + 1));
             } else if (((SkipBo) card).isType(SkipBo.Type.ERASER)) {
-                // Άδεισμα της στοίβας
-                this.cards.removeAll(cards);
-            } else { // Αν είναι μπαλαντέρ αύξηση κατά 1
+                // Ξ‘Ξ½ ΞµΞ―Ξ½Ξ±ΞΉ Ξ®Ξ΄Ξ· Ξ¬Ξ΄ΞµΞΉΞ± Ο„ΟΟ„Ξµ Ο‡ΟΞ·ΟƒΞΉΞΌΞΏΟ€ΞΏΞΉΞµΞ―Ο„Ξµ ΟƒΞ±Ξ½ ΞΌΞΉΞ± Ξ±Ο€Ξ»Ξ® SkipBo
+                if (isEmpty())
+                    cards.add(new Numeric(current + 1));
+                else
+                    // Ξ†Ξ΄ΞµΞΉΟƒΞΌΞ± Ο„Ξ·Ο‚ ΟƒΟ„ΞΏΞ―Ξ²Ξ±Ο‚
+                    this.cards.removeAll(cards);
+            } else { // Ξ‘Ξ½ ΞµΞ―Ξ½Ξ±ΞΉ ΞΌΟ€Ξ±Ξ»Ξ±Ξ½Ο„Ξ­Ο Ξ±ΟΞΎΞ·ΟƒΞ· ΞΊΞ±Ο„Ξ¬ 1
                 cards.add(new Numeric(current + 1));
             }
         }
@@ -59,28 +73,28 @@ public class Building implements PileInterface {
     public Card get() throws NullPileException {
         if (isEmpty())
             throw new NullPileException(this.getClass().getSimpleName());
-        // Επιστροφή της πάνω κάρτας στην στοίβα
+        // Ξ•Ο€ΞΉΟƒΟ„ΟΞΏΟ†Ξ® Ο„Ξ·Ο‚ Ο€Ξ¬Ξ½Ο‰ ΞΊΞ¬ΟΟ„Ξ±Ο‚ ΟƒΟ„Ξ·Ξ½ ΟƒΟ„ΞΏΞ―Ξ²Ξ±
         return cards.getLast();
     }
 
     @Override
     public boolean isEmpty() {
-        // Έλεγχος αν η στοίβα είναι άδεια
+        // ΞΞ»ΞµΞ³Ο‡ΞΏΟ‚ Ξ±Ξ½ Ξ· ΟƒΟ„ΞΏΞ―Ξ²Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ξ¬Ξ΄ΞµΞΉΞ±
         return this.cards.isEmpty();
     }
 
     @Override
     public boolean isFull() {
-        // Αν είναι άδεια τότε δεν είναι γεμάτη
+        // Ξ‘Ξ½ ΞµΞ―Ξ½Ξ±ΞΉ Ξ¬Ξ΄ΞµΞΉΞ± Ο„ΟΟ„Ξµ Ξ΄ΞµΞ½ ΞµΞ―Ξ½Ξ±ΞΉ Ξ³ΞµΞΌΞ¬Ο„Ξ·
         if (isEmpty()) {
             return false;
         }
 
-        // Αν η κάρτα μέσα στην στοίβα είναι αριθμός και 12 τότε είναι γεμάτη
+        // Ξ‘Ξ½ Ξ· ΞΊΞ¬ΟΟ„Ξ± ΞΌΞ­ΟƒΞ± ΟƒΟ„Ξ·Ξ½ ΟƒΟ„ΞΏΞ―Ξ²Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ξ±ΟΞΉΞΈΞΌΟΟ‚ ΞΊΞ±ΞΉ 12 Ο„ΟΟ„Ξµ ΞµΞ―Ξ½Ξ±ΞΉ Ξ³ΞµΞΌΞ¬Ο„Ξ·
         if (cards.getLast() instanceof Numeric) {
             Numeric card = (Numeric) cards.getLast();
             return card.getNumber() == 12;
-        } else { // Αλλιώς αν είναι μπαλαντέρ τύπου eraser τότε η στοίβα είναι γεμάτη
+        } else { // Ξ‘Ξ»Ξ»ΞΉΟΟ‚ Ξ±Ξ½ ΞµΞ―Ξ½Ξ±ΞΉ ΞΌΟ€Ξ±Ξ»Ξ±Ξ½Ο„Ξ­Ο Ο„ΟΟ€ΞΏΟ… eraser Ο„ΟΟ„Ξµ Ξ· ΟƒΟ„ΞΏΞ―Ξ²Ξ± ΞµΞ―Ξ½Ξ±ΞΉ Ξ³ΞµΞΌΞ¬Ο„Ξ·
             SkipBo card = (SkipBo) cards.getLast();
             return card.isType(SkipBo.Type.ERASER);
         }
