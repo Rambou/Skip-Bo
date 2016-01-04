@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class HandCollection implements PileInterface {
 
-    private ArrayList<Card> cards;
     public static final Integer MAX = 5;
+    private ArrayList<Card> cards;
 
     public HandCollection() {
         cards = new ArrayList<>();
@@ -36,7 +36,11 @@ public class HandCollection implements PileInterface {
     }
 
     public Card get(int i) {
-        return this.cards.get(i);
+        try {
+            return this.cards.get(i);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public void remove(int i) {
