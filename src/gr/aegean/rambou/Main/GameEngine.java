@@ -73,46 +73,20 @@ public class GameEngine {
             System.out.println(buidling[i].toString());
     }
 
-    public boolean placeCardToBuild(int player, int hand, int discard, int bpile) {
-        // έλεγχος αν το παινχίδι έχει τελειώσει
-        if (GameOver()) {
-            return false;
-        }
-
-        try {
-            if (hand > -1) {
-                this.buidling[bpile].add(((player == 1) ? player1 : player2).getHand().get(hand));
-            } else {
-                this.buidling[bpile].add(((player == 1) ? player1 : player2).getDiscard(discard).get());
-            }
-            return true;
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-
-    }
-
     public boolean GameOver() {
-        // έλεγχος αν το παινχίδι έχει τελειώσει
-        if (player1.won() || player2.won()) {
-            System.out.println("Το παιχνίδι τελείωσε, με νικητή τον " + (player1.won() ? player1.getName() : player2.getName()));
-            return true;
-        }
-
-        // Αν οι κάρτες στην drawpile έχουν τελειώσει
-        if (drawpile.isEmpty()) {
+        // έλεγχος αν το παινχίδι έχει τελειώσει ή οι κάρτες στην drawpile έχουν τελειώσει
+        if (player1.won() || player2.won() || drawpile.isEmpty()) {
             // Tύπωση των building piles
             printPlayers();
             printBuidPiles();
 
             int points;
             if ((player1.getStock().size() < player2.getStock().size())) {
-                points = player2.getStock().countPoints() - player1.getStock().countPoints();
+                points = player2.getStock().countPoints() - player1.getStock().countPoints() + 50;
                 player1.setPoints((points < 50) ? 50 : points);
                 winner = player1;
             } else {
-                points = player1.getStock().countPoints() - player2.getStock().countPoints();
+                points = player1.getStock().countPoints() - player2.getStock().countPoints() + 50;
                 player2.setPoints((points < 50) ? 50 : points);
                 winner = player2;
             }
