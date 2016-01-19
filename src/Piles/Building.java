@@ -35,10 +35,6 @@ public class Building implements PileInterface {
         if (card.isType(Card.Type.NUMERIC)) {
             if (((Numeric) card).getNumber() == current + 1) {
                 cards.add(card);
-                // Εάν ο αριθμός της κάρτας είναι 12 τότε σημαίνει ότι η Pile γέμισε και την καθαρίζεις
-                if (((Numeric) card).getNumber() == 12)
-                    // Άδεισμα της στοίβας
-                    this.cards.removeAll(cards);
             } else {
                 // System.out.println("Cannot add a card less or equal than " + ((Numeric) cards.getLast()).getNumber());
                 return false;
@@ -70,6 +66,15 @@ public class Building implements PileInterface {
                 cards.add(new Numeric(current + 1));
             }
         }
+
+        // Έλεγχος αν ο αριθμός της τελευταίας κάρτας στην στοίβα
+        // είναι 12 τότε σημαίνει ότι η Pile γέμισε και την καθαρίζεις
+        if (!isEmpty())
+            if (((Numeric) cards.getLast()).getNumber() == 12) {
+                // Άδεισμα της στοίβας
+                this.cards.removeAll(cards);
+            }
+
         return true;
     }
 
