@@ -3,6 +3,8 @@ package card;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,10 +21,25 @@ public class UI extends JButton {
     private Card card;
     private Type type;
     private int potition;
+    private int X, Y;
 
     public UI(Type type, int potition) {
         this.type = type;
         this.potition = potition;
+
+        addMouseListener(new MouseAdapter() {
+            public void mouseReleased(MouseEvent e) {
+                if (X == 0 || Y == 0) {
+                    return;
+                }
+                setBounds(UI.this.X, UI.this.Y, getWidth(), getHeight());
+            }
+        });
+    }
+
+    public void setCardInitialBounds(int X, int Y) {
+        this.X = X;
+        this.Y = Y;
     }
 
     public Type getTYPE() {

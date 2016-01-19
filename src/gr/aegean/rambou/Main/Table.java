@@ -5,8 +5,8 @@ import card.UI;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.IOException;
 
 public class Table extends JFrame {
@@ -56,6 +56,14 @@ public class Table extends JFrame {
             setIconImage(ImageIO.read(getClass().getClassLoader().getResource("card/logo.png")));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        // Θέτουμε τον κέρσορα να είναι χέρι
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        try {
+            setCursor(toolkit.createCustomCursor(ImageIO.read(getClass().getClassLoader().getResource("card/hand_open.png")),
+                    new Point(0, 0), "MyCursor"));
+        } catch (Exception e) {
         }
 
         initComponents();
@@ -206,6 +214,16 @@ public class Table extends JFrame {
         p1_discard2.addActionListener(new DiscardActionListener(p1_discard2));
         p1_discard3.addActionListener(new DiscardActionListener(p1_discard3));
         p1_discard4.addActionListener(new DiscardActionListener(p1_discard4));
+
+        p1_discard1.addMouseMotionListener(new mouseAdapter(p1_discard1));
+        p1_discard2.addMouseMotionListener(new mouseAdapter(p1_discard2));
+        p1_discard3.addMouseMotionListener(new mouseAdapter(p1_discard3));
+        p1_discard4.addMouseMotionListener(new mouseAdapter(p1_discard4));
+        p1_discard1.addMouseListener(new mouseAdapter(p1_discard1));
+        p1_discard2.addMouseListener(new mouseAdapter(p1_discard2));
+        p1_discard3.addMouseListener(new mouseAdapter(p1_discard3));
+        p1_discard4.addMouseListener(new mouseAdapter(p1_discard4));
+
         building1.addActionListener(new BuildingActionListener(building1));
         building2.addActionListener(new BuildingActionListener(building2));
         building3.addActionListener(new BuildingActionListener(building3));
@@ -214,6 +232,16 @@ public class Table extends JFrame {
         p2_discard2.addActionListener(new DiscardActionListener(p2_discard2));
         p2_discard3.addActionListener(new DiscardActionListener(p2_discard3));
         p2_discard4.addActionListener(new DiscardActionListener(p2_discard4));
+
+        p2_discard1.addMouseMotionListener(new mouseAdapter(p2_discard1));
+        p2_discard2.addMouseMotionListener(new mouseAdapter(p2_discard2));
+        p2_discard3.addMouseMotionListener(new mouseAdapter(p2_discard3));
+        p2_discard4.addMouseMotionListener(new mouseAdapter(p2_discard4));
+        p2_discard1.addMouseListener(new mouseAdapter(p2_discard1));
+        p2_discard2.addMouseListener(new mouseAdapter(p2_discard2));
+        p2_discard3.addMouseListener(new mouseAdapter(p2_discard3));
+        p2_discard4.addMouseListener(new mouseAdapter(p2_discard4));
+
         p1_hand1.addActionListener(new HandActionListener(p1_hand1));
         p1_hand2.addActionListener(new HandActionListener(p1_hand2));
         p1_hand3.addActionListener(new HandActionListener(p1_hand3));
@@ -226,6 +254,31 @@ public class Table extends JFrame {
         p2_hand5.addActionListener(new HandActionListener(p2_hand5));
         p2_stock.addActionListener(new StockActionListener(p2_stock));
         p1_stock.addActionListener(new StockActionListener(p1_stock));
+
+        p1_hand1.addMouseMotionListener(new mouseAdapter(p1_hand1));
+        p1_hand2.addMouseMotionListener(new mouseAdapter(p1_hand2));
+        p1_hand3.addMouseMotionListener(new mouseAdapter(p1_hand3));
+        p1_hand4.addMouseMotionListener(new mouseAdapter(p1_hand4));
+        p1_hand5.addMouseMotionListener(new mouseAdapter(p1_hand5));
+        p2_hand1.addMouseMotionListener(new mouseAdapter(p2_hand1));
+        p2_hand2.addMouseMotionListener(new mouseAdapter(p2_hand2));
+        p2_hand3.addMouseMotionListener(new mouseAdapter(p2_hand3));
+        p2_hand4.addMouseMotionListener(new mouseAdapter(p2_hand4));
+        p2_hand5.addMouseMotionListener(new mouseAdapter(p2_hand5));
+        p2_stock.addMouseMotionListener(new mouseAdapter(p2_stock));
+        p1_stock.addMouseMotionListener(new mouseAdapter(p1_stock));
+        p1_hand1.addMouseListener(new mouseAdapter(p1_hand1));
+        p1_hand2.addMouseListener(new mouseAdapter(p1_hand2));
+        p1_hand3.addMouseListener(new mouseAdapter(p1_hand3));
+        p1_hand4.addMouseListener(new mouseAdapter(p1_hand4));
+        p1_hand5.addMouseListener(new mouseAdapter(p1_hand5));
+        p2_hand1.addMouseListener(new mouseAdapter(p2_hand1));
+        p2_hand2.addMouseListener(new mouseAdapter(p2_hand2));
+        p2_hand3.addMouseListener(new mouseAdapter(p2_hand3));
+        p2_hand4.addMouseListener(new mouseAdapter(p2_hand4));
+        p2_hand5.addMouseListener(new mouseAdapter(p2_hand5));
+        p2_stock.addMouseListener(new mouseAdapter(p2_stock));
+        p1_stock.addMouseListener(new mouseAdapter(p1_stock));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Τοποθεσία εκκίνησης παραθύρου στην οθόνη
@@ -679,5 +732,67 @@ public class Table extends JFrame {
             if (gameEnd()) return;
         }
 
+    }
+
+    class mouseAdapter implements MouseMotionListener, MouseListener {
+
+        private final UI card;
+        private boolean first = true;
+
+        public mouseAdapter(UI card) {
+            this.card = card;
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent E) {
+            int X = E.getX() + card.getX();
+            int Y = E.getY() + card.getY();
+            if (first) {
+                card.setCardInitialBounds(card.getBounds().x, card.getBounds().y);
+                card.getParent().setComponentZOrder(card, 0);
+                first = false;
+            }
+            card.setBounds(X, Y, card.getWidth(), card.getHeight());
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent E) {
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            //Set Cursor Closed
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            try {
+                setCursor(toolkit.createCustomCursor(ImageIO.read(getClass().getClassLoader().getResource("card/hand_closed.png")),
+                        new Point(0, 0), "MyCursor"));
+            } catch (Exception ex) {
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+            try {
+                setCursor(toolkit.createCustomCursor(ImageIO.read(getClass().getClassLoader().getResource("card/hand_open.png")),
+                        new Point(0, 0), "MyCursor"));
+            } catch (Exception ex) {
+            }
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
     }
 }
